@@ -1,0 +1,116 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!! my settings below
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!! for the some keyboard command, git clone https://github.com/muennich/urxvt-perls
+!! for copy and paste, sudo apt install xsel
+!! 
+!! this path must be either relative path based on current working dir from where launched urxvt, or absolute path.
+!URxvt.perl-lib: .config/urxvt_conf/urxvt-perls:/home/appstew/.appstew/urxvt_conf/urxvt-perls
+URxvt.perl-lib: urxvt_conf/perl
+!URxvt.perl-ext-common: default,tabbed
+
+
+!! Colorscheme
+
+!! native urxvt on linux works with real transparency.
+!! but it is not on pyqt embedded, so needed to set !depth.
+!! also, fake transparency does not work on pyqt embbed.
+
+!! below 3 is for the real transparency
+urxvt*depth:                          32
+urxvt*foreground:                     [80]grey
+urxvt*background: [90]#353c3d
+!urxvt*background: [90]#353c3d
+!! below 2 is for the fake transparency
+urxvt*transparent: true
+urxvt*shading: 3
+
+!urxvt.background.expr: keep { load "$HOME/.appstew/images/terminal_logo.svg" }
+urxvt.fadeColor: [50]white
+!urxvt.pixmap: /media/appstew/239G/raw100.img/appimage-making/success/appsuite/appsource/utils/images/uxwing.com/app_logo.png
+
+
+! black
+*.color0: #263640
+*.color8: #4a697d
+
+! tab button background color
+*.color1: purple
+*.color9: #fa3935
+
+! user@computer - white or black
+*.color2: [70]white
+*.color10: [70]black
+
+! tab button text color
+*.color3: white
+*.color11: #d9a400
+
+! folder & $PWD color like in ls and user@computer;$PWD
+*.color4: [50]yellow
+*.color12: [50]yellow
+
+! magenta
+*.color5: #696ebf
+*.color13: #8086e8
+
+! cyan
+*.color6: [70]purple
+*.color14: [70]purple
+
+! white
+*.color7: #bfbaac
+*.color15: #fdf6e3
+
+
+
+
+
+!! URxvt Appearance
+URxvt.font: xft:Bitstream Vera Sans Mono:pixelsize=15
+!URxvt*font:                           xft:Bitstream Vera Sans Mono:pixelsize=15
+!URxvt.boldFont: xft:Iosevka:style=Bold:size=12
+!URxvt.italicFont: xft:Iosevka:style=Italic:size=12
+!URxvt.boldItalicfont: xft:Iosevka:style=Bold Italic:size=12
+! URxvt.letterSpace: 0
+! URxvt.lineSpace: 0
+!URxvt.geometry: 92x24
+!URxvt.internalBorder: 10
+URxvt.cursorBlink: true
+urxvt.tabbed: true
+URxvt.cursorUnderline: false
+URxvt.saveline: 2048
+URxvt.scrollBar: false
+URxvt.scrollBar_right: false
+URxvt.urgentOnBell: true
+URxvt.iso14755: false
+
+!! Common Keybinds for Navigations
+
+!    Shift Up to scroll one line higher
+!    Shift Down to scroll one line lower
+!    Control Left to jump to the previous word
+!    Control Right to jump to the next word
+
+URxvt.keysym.Shift-Up: command:\033]720;1\007
+URxvt.keysym.Shift-Down: command:\033]721;1\007
+URxvt.keysym.Control-Up: \033[1;5A
+URxvt.keysym.Control-Down: \033[1;5B
+URxvt.keysym.Control-Right: \033[1;5C
+URxvt.keysym.Control-Left: \033[1;5D
+
+!! Copy Paste & Other Extensions
+URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select,tabbed
+URxvt.copyCommand: xclip -i -selection clipboard
+URxvt.pasteCommand: xclip -o -selection clipboard
+URxvt.keysym.C-C: perl:clipboard:copy
+URxvt.keysym.C-V: perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+URxvt.keysym.C-u: perl:url-select:select_next
+URxvt.urlLauncher: firefox
+URxvt.underlineURLs: true
+URxvt.urlButton: 1

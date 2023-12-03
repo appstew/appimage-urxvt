@@ -11,3 +11,7 @@ urxvt appimage(portable unix binary executable)
 - add new tab terminal function
 - 
 
+### how to run:
+- download urxvt in [release page](https://github.com/appstew/appimage-urxvt/releases/tag/v1.00)
+- move urxvt to preferable $PATH
+- run "urxvt" in terminal or jsut double click in file explorer

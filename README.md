@@ -13,5 +13,9 @@ urxvt appimage(portable unix binary executable)
 
 ### how to run:
 - download urxvt in [release page](https://github.com/appstew/appimage-urxvt/releases/tag/v1.00)
+  - or you can get this binary by the following:
+    - cd nested-appimage
+    - appimage-builder --skip-test
+    - for more information about appimage-builder, read the [official site](https://appimage-builder.readthedocs.io/en/latest/)
 - move urxvt to preferable $PATH
 - run "urxvt" in terminal or jsut double click in file explorer

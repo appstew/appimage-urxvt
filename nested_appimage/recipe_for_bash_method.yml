@@ -1,0 +1,77 @@
+# appimage-builder recipe see https://appimage-builder.readthedocs.io for details
+## 테스트 이미지에 libfuse2 , fuse 모듈이 없으므로  appimage-builder --skip-test 로 진행한다.
+version: 1
+script:
+  - rm -rf AppDir  | true
+  - rm -rf appimage-build
+  - cp -r res2 AppDir
+AppDir:
+  path: ./AppDir
+  app_info:
+    id: urxvt
+    name: urxvt
+    icon: urxvt
+    version: latest
+    # Set the python executable as entry point
+    exec: local.bash
+    # Set the application main script path as argument. Use '$@' to forward CLI parameters
+    exec_args: $APPDIR/launch.sh
+    ## exec_args 를 ${APPDIR}/launch.sh 를 하면  env 에 /tmp/.mount_appimarAlV5y// 와 같이 저장됨
+    ## 다음 페이지에  오류가 있다.
+    ## https://appimage-builder.readthedocs.io/en/latest/reference/recipe.html 
+    
+    
+  apt:
+    arch: amd64
+    allow_unauthenticated: true
+    sources:
+      - sourceline: deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
+    include: [] 
+    #- libc6
+    # - libglib2.0-0
+    # - gstreamer1.0-tools
+    # - libgstreamer1.0-0
+    exclude: []
+## 다른 일반적인 2 개의 경우와는 달리, 이 경우는 AppRun > launch > ./urxvt 의 세 경로를 거치는 구조를 가지고 있어서 libc6 을 비롯한 다른 패키지매핑으로는 실행이 안된다. 최종 executable인 ./urxvt 가 lib64/libc.so 를 원하기 때문에 오직 res2 와 AppDir 안에 lib64/* 가 실제로 존재해야 한다.
+  #runtime:
+  #   env:
+  #     PERL5LIB: '${APPDIR}/urxvt_conf/:${APPDIR}/urxvt_conf/perl-modules/'
+    # path_mappings:
+    #  - /lib64:$APPDIR/lib64
+    #  - /lib/x86_64-linux-gnu:$APPDIR/lib64
+
+  test:
+
+    fedora-30:
+      image: appimagecrafters/tests-env:fedora-30
+      #command: env XDG_RUNTIME_DIR=/run/user/1000 bash -c './AppRun'
+      #command: "./kmod load ./fuse/cuse.ko && ./kmod load ./fuse/cuse.ko && ./AppRun"
+      command: "./AppRun"
+      #use_host_x: True
+      env:
+        QT_DEBUG_PLUGINS: 0 
+        LD_DEBUG: libs
+    debian-stable:
+      image: appimagecrafters/tests-env:debian-stable
+      command: ./AppRun
+      use_host_x: true
+    archlinux-latest:
+      image: appimagecrafters/tests-env:archlinux-latest
+      command: ./AppRun
+      use_host_x: true
+    centos-7:
+      image: appimagecrafters/tests-env:centos-7
+      command: ./AppRun
+    ubuntu:
+      image: appimagecrafters/tests-env:ubuntu-xenial
+      command: ./AppRun
+      use_host_x: true
+    # ubuntu-lunar:
+    #   image: ubuntu:23.04
+    #   command: ./AppRun
+    #   use_host_x: true
+    
+AppImage:
+  arch: x86_64
+  update-information: None
+  sign-key: None

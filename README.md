@@ -2,7 +2,7 @@
 appimage-urxvt submodule
 urxvt appimage(portable unix binary executable)
 
-
+![](./urxvt-linux.gif)
 
 ### this is urxvt-appimage, but pre-enabled and built-in with the following:
 
